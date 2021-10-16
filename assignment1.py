@@ -24,14 +24,17 @@ def neighbourhood(graph, leaf):
                 neighbours.append(next_node)
     return neighbours
 
+def graph_search(graph, start_node, goal_node):
+    frontier = start_node
+    explored = []
+
 
 def pathfinding(input_filepath):
     # input_filepath contains the full path to a CSV file with the input grid
     graph = []
     count_x = 0
     count_y = 0
-    frontier = []
-    explored = []
+
 
     with open(input_filepath, "r") as inputs:
         tmp = inputs.read().split("\n")
@@ -54,7 +57,6 @@ def pathfinding(input_filepath):
     for obj in graph:
         if (obj == "S"):
             start_node = obj
-            frontier.append(start_node)
     
     while True:
         if frontier == []:
@@ -63,19 +65,19 @@ def pathfinding(input_filepath):
         if leaf == goal_node:
             return leaf.path()
         explored.append(leaf)
-        for node in neighbourhood(graph, leaf):
+        for next_node in neighbourhood(graph, leaf):
             curr_path_cost = leaf.path_cost + 1
-            if ((node not in frontier and node not in explored)
-                or (node in frontier and curr_path_cost < node.path_cost)):
-                node.parent = leaf
-                node.path_cost = curr_path_cost
-                frontier.append(node)
+            if ((next_node not in frontier and next_node not in explored)
+                or (next_node in frontier and curr_path_cost < next_node.path_cost)):
+                next_node.parent = leaf
+                next_node.path_cost = curr_path_cost
+                frontier.append(next_node)
 
 
     # optimal_path is a list of tuples indicated the optimal path from start to goal
     # explored_list is the list of nodes explored during search
     # optimal_path_cost is the cost of the optimal path from the start state to the goal state
-    return 1
+    
 
 
 pathfinding("input.txt")
