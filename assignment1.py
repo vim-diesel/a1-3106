@@ -71,11 +71,18 @@ def pathfinding(input_filepath):
             obj.isObstacle = True
         elif(obj.label == "H"):
             obj.isHazard = True
+
+    # convert all tiles adjacent to a hazard to an obstacle
     for obj in graph:
-        obj.h = heuristic(obj, goal_node)
+        if(obj.label == "H"):
+            hazard_neighbours = neighbourhood(graph, obj)
+            for neighbour in hazard_neighbours:
+                neighbour.label = "X"
+            obj.label = "X"
+
     for obj in graph:
-        if (obj == "S"):
-            start_node = obj
+        if(obj.label is not "X"):
+            obj.h = heuristic(obj, goal_node)
 
     graph_search(graph, start_node, goal_node)
 
