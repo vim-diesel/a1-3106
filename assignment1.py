@@ -16,9 +16,9 @@ def heuristic(curr_node, goal_node):
     dy = abs(curr_node.y - goal_node.y)
     return D * (dx + dy)
 
-def neighbourhood(graph, leaf):
+def neighbourhood(graph, leaf, frontier, explored):
     for node in graph:
-        
+
 
 
 def pathfinding(input_filepath):
@@ -60,6 +60,7 @@ def pathfinding(input_filepath):
             return leaf.path()
         explored.append(leaf)
         for obj in neighbourhood(leaf):
+            curr_path_cost = leaf.path_cost + 1
             
     for obj in list:
         print(obj.x, obj.y, obj.label, obj.h, sep=" ")
