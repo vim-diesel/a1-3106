@@ -7,7 +7,7 @@ class node:
         self.label = label
 
     def path(self):
-        return Null # TODO: calculate path from start to goal
+        return False # TODO: calculate path from start to goal
 
 
 def heuristic(curr_node, goal_node):
