@@ -63,13 +63,13 @@ def pathfinding(input_filepath):
         if leaf == goal_node:
             return leaf.path()
         explored.append(leaf)
-        for obj in neighbourhood(graph, leaf):
+        for node in neighbourhood(graph, leaf):
             curr_path_cost = leaf.path_cost + 1
-    
-
-    for obj in graph:
-        print(obj.x, obj.y, obj.label, obj.h, sep=" ")
-
+            if ((node not in frontier and node not in explored)
+                or (node in frontier and curr_path_cost < node.path_cost)):
+                node.parent = leaf
+                node.path_cost = curr_path_cost
+                frontier.append(node)
 
 
     # optimal_path is a list of tuples indicated the optimal path from start to goal
