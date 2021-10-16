@@ -71,7 +71,7 @@ def pathfinding(input_filepath):
         print(obj.x, obj.y, obj.label, obj.h, sep=" ")
 
     print("neighbours test:")
-    neighbours = neighbourhood(graph, start_node)
+    neighbours = neighbourhood(graph, goal_node)
 
     for obj in neighbours:
         print(obj.x, obj.y, obj.label, obj.h, sep=" ")
