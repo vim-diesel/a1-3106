@@ -38,9 +38,10 @@ def pathfinding(input_filepath):
                 goal_node = obj
 
         for obj in list:
-            if(obj != goal_node):
+            obj.h = heuristic(obj, goal_node)
                 
-        
+        for obj in list:
+            print(obj.x, obj.y, obj.label, obj.h, sep=" ")
                 
 
     # optimal_path is a list of tuples indicated the optimal path from start to goal
