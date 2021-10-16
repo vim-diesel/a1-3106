@@ -16,17 +16,35 @@ def heuristic(curr_node, goal_node):
     dy = abs(curr_node.y - goal_node.y)
     return D * (dx + dy)
 
+
 def neighbourhood(graph, leaf):
     neighbours = []
     for next_node in graph:
-        if (heuristic(leaf, next_node) == 1 and leaf!=next_node):
+        if (heuristic(leaf, next_node) == 1 and leaf != next_node):
             if next_node.h < leaf.h:
                 neighbours.append(next_node)
     return neighbours
 
+
 def graph_search(graph, start_node, goal_node):
-    frontier = start_node
+    frontier = []
+    frontier.append(start_node)
     explored = []
+
+    while True:
+        if frontier == []:
+            return False
+        leaf = frontier.pop()
+        if leaf == goal_node:
+            return leaf.path()
+        explored.append(leaf)
+        for next_node in neighbourhood(graph, leaf):
+            curr_path_cost = leaf.path_cost + 1
+            if ((next_node not in frontier and next_node not in explored)
+                    or (next_node in frontier and curr_path_cost < next_node.path_cost)):
+                next_node.parent = leaf
+                next_node.path_cost = curr_path_cost
+                frontier.append(next_node)
 
 
 def pathfinding(input_filepath):
@@ -34,7 +52,6 @@ def pathfinding(input_filepath):
     graph = []
     count_x = 0
     count_y = 0
-
 
     with open(input_filepath, "r") as inputs:
         tmp = inputs.read().split("\n")
@@ -57,27 +74,12 @@ def pathfinding(input_filepath):
     for obj in graph:
         if (obj == "S"):
             start_node = obj
-    
-    while True:
-        if frontier == []:
-            return False
-        leaf = frontier.pop()
-        if leaf == goal_node:
-            return leaf.path()
-        explored.append(leaf)
-        for next_node in neighbourhood(graph, leaf):
-            curr_path_cost = leaf.path_cost + 1
-            if ((next_node not in frontier and next_node not in explored)
-                or (next_node in frontier and curr_path_cost < next_node.path_cost)):
-                next_node.parent = leaf
-                next_node.path_cost = curr_path_cost
-                frontier.append(next_node)
 
+    graph_search(graph, start_node, goal_node)
 
     # optimal_path is a list of tuples indicated the optimal path from start to goal
     # explored_list is the list of nodes explored during search
     # optimal_path_cost is the cost of the optimal path from the start state to the goal state
-    
 
 
 pathfinding("input.txt")
