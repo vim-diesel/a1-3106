@@ -16,14 +16,18 @@ def heuristic(curr_node, goal_node):
     dy = abs(curr_node.y - goal_node.y)
     return D * (dx + dy)
 
-def neighbourhood(graph, leaf, frontier, explored):
-    for node in graph:
-
+def neighbourhood(graph, leaf):
+    neighbours = []
+    for next_node in graph:
+        if (heuristic(leaf, next_node) > 1 and leaf!=next_node):
+            if next_node.h < leaf.h:
+                neighbours.append(next_node)
+    return neighbours
 
 
 def pathfinding(input_filepath):
     # input_filepath contains the full path to a CSV file with the input grid
-    list = []
+    graph = []
     count_x = 0
     count_y = 0
     frontier = []
@@ -36,22 +40,22 @@ def pathfinding(input_filepath):
 
     for row in array:
         for item in row:
-            list.append(node(count_x, count_y, item))
+            graph.append(node(count_x, count_y, item))
             count_x += 1
         count_y += 1
         count_x = 0
-    for obj in list:
+    for obj in graph:
         if(obj.label == "S"):
             start_node = obj
         elif(obj.label == "G"):
             goal_node = obj
-    for obj in list:
+    for obj in graph:
         obj.h = heuristic(obj, goal_node)
-    for obj in list:
+    for obj in graph:
         if (obj == "S"):
             start_node = obj
             frontier.append(start_node)
-
+    """"
     while True:
         if frontier == []:
             return False
@@ -59,10 +63,17 @@ def pathfinding(input_filepath):
         if leaf == goal_node:
             return leaf.path()
         explored.append(leaf)
-        for obj in neighbourhood(leaf):
+        for obj in neighbourhood(graph, leaf):
             curr_path_cost = leaf.path_cost + 1
-            
-    for obj in list:
+    """
+
+    for obj in graph:
+        print(obj.x, obj.y, obj.label, obj.h, sep=" ")
+
+    print("neighbours test:")
+    neighbours = neighbourhood(graph, start_node)
+
+    for obj in neighbours:
         print(obj.x, obj.y, obj.label, obj.h, sep=" ")
 
     # optimal_path is a list of tuples indicated the optimal path from start to goal
