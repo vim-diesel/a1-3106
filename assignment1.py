@@ -55,7 +55,7 @@ def pathfinding(input_filepath):
         if (obj == "S"):
             start_node = obj
             frontier.append(start_node)
-    """"
+    
     while True:
         if frontier == []:
             return False
@@ -65,16 +65,12 @@ def pathfinding(input_filepath):
         explored.append(leaf)
         for obj in neighbourhood(graph, leaf):
             curr_path_cost = leaf.path_cost + 1
-    """
+    
 
     for obj in graph:
         print(obj.x, obj.y, obj.label, obj.h, sep=" ")
 
-    print("neighbours test:")
-    neighbours = neighbourhood(graph, goal_node)
 
-    for obj in neighbours:
-        print(obj.x, obj.y, obj.label, obj.h, sep=" ")
 
     # optimal_path is a list of tuples indicated the optimal path from start to goal
     # explored_list is the list of nodes explored during search
