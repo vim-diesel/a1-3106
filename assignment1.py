@@ -6,8 +6,7 @@ class node:
         self.y = y
         self.label = label
 
-    def path(self):
-        return False # TODO: calculate path from start to goal
+
 
 
 def heuristic(curr_node, goal_node):
@@ -37,7 +36,7 @@ def graph_search(graph, start_node, goal_node):
             return False
         leaf = frontier.pop()
         if leaf == goal_node:
-            return leaf.path()
+            return leaf.path() ## TODO: Backtrack through parents
         explored.append(leaf)
         for next_node in neighbourhood(graph, leaf):
             curr_path_cost = leaf.path_cost + 1
