@@ -19,6 +19,9 @@ def pathfinding(input_filepath):
     count_y = 0
     frontier = []
     explored = []
+
+    def path:
+        
     
 
     with open(input_filepath, "r") as inputs:
@@ -45,7 +48,14 @@ def pathfinding(input_filepath):
             start_node = obj
             frontier.append(start_node)
     
-    
+    while True:
+        if frontier == []:
+            return False
+        leaf = frontier.pop()
+        if leaf == goal_node:
+            leaf.path()
+        
+
 
     
 
