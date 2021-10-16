@@ -1,10 +1,16 @@
 # Name this file to assignment1.py when you submit
 
 class node:
-    def __init__(self, x, y, label, parent=None, action=None, path_cost=0):
+    def __init__(self, x, y, label, parent=None, action=None, path_cost=0, h=0):
         self.x = x
         self.y = y
         self.label = label
+
+def heuristic(curr_node, goal_node):
+    D = 1 #simple move cost of 1
+    dx = abs(curr_node.x - goal_node.x)
+    dy = abs(curr_node.y - goal_node.y)
+    return D * (dx + dy)
 
 def pathfinding(input_filepath):
     # input_filepath contains the full path to a CSV file with the input grid
@@ -26,8 +32,15 @@ def pathfinding(input_filepath):
             count_x = 0
 
         for obj in list:
-            print(obj.x, obj.y, obj.label, sep=" ")
             if(obj.label == "S"):
+                start_node = obj
+            elif(obj.label == "G"):
+                goal_node = obj
+
+        for obj in list:
+            if(obj != goal_node):
+                
+        
                 
 
     # optimal_path is a list of tuples indicated the optimal path from start to goal
