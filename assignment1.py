@@ -5,6 +5,9 @@ class node:
         self.x = x
         self.y = y
         self.label = label
+    
+    def path(self):
+        return self.path_cost # TODO: calculate path from start to goal
 
 def heuristic(curr_node, goal_node):
     D = 1 #simple move cost of 1
@@ -19,9 +22,6 @@ def pathfinding(input_filepath):
     count_y = 0
     frontier = []
     explored = []
-
-    def path:
-        
     
 
     with open(input_filepath, "r") as inputs:
