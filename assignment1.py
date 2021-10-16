@@ -1,12 +1,10 @@
 # Name this file to assignment1.py when you submit
 
 class node:
-    def __init__(self, x, y, label, parent=None, action=None, path_cost=0, h=0):
+    def __init__(self, x, y, label, parent=None, isObstacle=False, path_cost=0, h=0):
         self.x = x
         self.y = y
         self.label = label
-
-
 
 
 def heuristic(curr_node, goal_node):
@@ -19,7 +17,7 @@ def heuristic(curr_node, goal_node):
 def neighbourhood(graph, leaf):
     neighbours = []
     for next_node in graph:
-        # Only append nodes that are directly left or right of 
+        # Only append nodes that are directly left or right of
         # current node
         if (heuristic(leaf, next_node) == 1 and leaf != next_node):
             neighbours.append(next_node)
@@ -36,7 +34,7 @@ def graph_search(graph, start_node, goal_node):
             return False
         leaf = frontier.pop()
         if leaf == goal_node:
-            return leaf.path() ## TODO: Backtrack through parents
+            return leaf.path()  # TODO: Backtrack through parents
         explored.append(leaf)
         for next_node in neighbourhood(graph, leaf):
             curr_path_cost = leaf.path_cost + 1
@@ -69,6 +67,8 @@ def pathfinding(input_filepath):
             start_node = obj
         elif(obj.label == "G"):
             goal_node = obj
+        elif(obj.label == "X"):
+            obj.isObstacle = True
     for obj in graph:
         obj.h = heuristic(obj, goal_node)
     for obj in graph:
