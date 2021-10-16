@@ -1,9 +1,9 @@
 # Name this file to assignment1.py when you submit
-from pathlib import Path
+#from pathlib import Path
 
-data_folder = Path("/home/ubuntu/3106/a1")
+#data_folder = Path("/home/ubuntu/3106/a1")
 
-input_file = data_folder / "input.txt"
+#input_file = data_folder / "input.txt"
 
 
 def pathfinding(input_filepath):
@@ -26,4 +26,4 @@ def pathfinding(input_filepath):
     return 1
 
 
-pathfinding(input_file)
+pathfinding("input.txt")
