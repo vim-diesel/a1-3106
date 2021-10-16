@@ -1,7 +1,7 @@
 # Name this file to assignment1.py when you submit
 
 class node:
-    def __init__(self, x, y, parent=None, action=None, path_cost=0):
+    def __init__(self, x, y, parent=None, action=None, path_cost=0, isStart=0, isGoal=0, isObstacle=0, isHazard=0):
         self.x = x
         self.y = y
 
@@ -18,7 +18,16 @@ def pathfinding(input_filepath):
 
         for row in array:
             for item in row:
-                list.append( node(count_x, count_y))
+                if(item == "S"):
+                    list.append( node(count_x, count_y, isStart=1))
+                elif(item == "G"):
+                    list.append( node(count_x, count_y, isGoal=1))
+                elif(item == "H"):
+                    list.append( node(count_x, count_y, isHazard=1))
+                elif(item == "X"):
+                    list.append( node(count_x, count_y, isObstacle=1))
+                else:
+                    list.append( node(count_x, count_y))
                 count_x += 1
             count_y += 1
             count_x = 0
