@@ -1,7 +1,7 @@
 # Name this file to assignment1.py when you submit
 
 class node:
-    def __init__(self, x, y, label, parent=None, isObstacle=False, path_cost=0, h=0):
+    def __init__(self, x, y, label, parent=None, path_cost=0, h=0, isObstacle=False, isHazard=False):
         self.x = x
         self.y = y
         self.label = label
@@ -69,6 +69,8 @@ def pathfinding(input_filepath):
             goal_node = obj
         elif(obj.label == "X"):
             obj.isObstacle = True
+        elif(obj.label == "H"):
+            obj.isHazard = True
     for obj in graph:
         obj.h = heuristic(obj, goal_node)
     for obj in graph:
