@@ -20,9 +20,10 @@ def heuristic(curr_node, goal_node):
 def neighbourhood(graph, leaf):
     neighbours = []
     for next_node in graph:
+        # Only append nodes that are directly left or right of 
+        # current node
         if (heuristic(leaf, next_node) == 1 and leaf != next_node):
-            if next_node.h < leaf.h:
-                neighbours.append(next_node)
+            neighbours.append(next_node)
     return neighbours
 
 
