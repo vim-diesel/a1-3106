@@ -5,15 +5,21 @@ class node:
         self.x = x
         self.y = y
         self.label = label
-    
+
     def path(self):
-        return self.path_cost # TODO: calculate path from start to goal
+        return self.path_cost  # TODO: calculate path from start to goal
+
 
 def heuristic(curr_node, goal_node):
-    D = 1 #simple move cost of 1
+    D = 1  # simple move cost of 1
     dx = abs(curr_node.x - goal_node.x)
     dy = abs(curr_node.y - goal_node.y)
     return D * (dx + dy)
+
+def neighbourhood(graph, leaf):
+    for node in graph:
+        
+
 
 def pathfinding(input_filepath):
     # input_filepath contains the full path to a CSV file with the input grid
@@ -22,14 +28,12 @@ def pathfinding(input_filepath):
     count_y = 0
     frontier = []
     explored = []
-    
 
     with open(input_filepath, "r") as inputs:
         tmp = inputs.read().split("\n")
         tmp.remove('')
         array = [i.split(",") for i in tmp]
-    
-    
+
     for row in array:
         for item in row:
             list.append(node(count_x, count_y, item))
@@ -47,22 +51,19 @@ def pathfinding(input_filepath):
         if (obj == "S"):
             start_node = obj
             frontier.append(start_node)
-    
+
     while True:
         if frontier == []:
             return False
         leaf = frontier.pop()
         if leaf == goal_node:
-            leaf.path()
-        
-
-
-    
-
+            return leaf.path()
+        explored.append(leaf)
+        for obj in neighbourhood(leaf):
             
     for obj in list:
         print(obj.x, obj.y, obj.label, obj.h, sep=" ")
-            
+
     # optimal_path is a list of tuples indicated the optimal path from start to goal
     # explored_list is the list of nodes explored during search
     # optimal_path_cost is the cost of the optimal path from the start state to the goal state
