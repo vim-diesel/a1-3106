@@ -3,10 +3,15 @@ Please answer the following questions in the technical document. Explain why you
 
 The technical document will be worth 40 marks, allocated as described above.
 1.Briefly describe how your implementation works. Include information on any important algorithms, design decisions, data structures, etc. used in your implementation. [10 marks]
+    
+    
 
 2. What type of agent have you implemented (simple reflex agent, model-based reflex agent, goal-based agent, or utility-based agent)? [3 marks]
+    Goal based...
 
 3. What heuristic should be used for A* search for this environment? Show that this heuristic is consistent. Show that this heuristic is more informed than some alternative heuristic. [8 marks]
+
+    http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#manhattan-distance
 
 4. Suggest a particular instance of this problem where A* search would find the optimal solution faster than uniform cost search. [4 marks]
 
