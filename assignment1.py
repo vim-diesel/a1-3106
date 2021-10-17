@@ -80,8 +80,11 @@ def pathfinding(input_filepath):
 
     with open(input_filepath, "r") as inputs:
         tmp = inputs.read().split("\n")
-        tmp.remove('')
         array = [i.split(",") for i in tmp]
+    if([''] in array):
+        array.remove([''])
+
+    print(array)
 
     for row in array:
         for item in row:
