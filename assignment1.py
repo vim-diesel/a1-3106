@@ -40,9 +40,9 @@ def path(node):
 
 
 def graph_search(graph, start_node, goal_node):
-    frontier = []
+    frontier = list()
     frontier.append(start_node)
-    explored = []
+    explored = list()
 
     while True:
         if frontier == []:
@@ -70,7 +70,7 @@ def graph_search(graph, start_node, goal_node):
 
 def pathfinding(input_filepath):
     # input_filepath contains the full path to a CSV file with the input grid
-    graph = []
+    graph = list()
     count_x = 0
     count_y = 0
 
