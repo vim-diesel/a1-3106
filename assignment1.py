@@ -50,11 +50,13 @@ def graph_search(graph, start_node, goal_node):
         leaf = frontier.pop()
         if leaf == goal_node:
             explored.append(leaf)
-            print(leaf.path_cost)
+
+            print("Path cost:" + leaf.path_cost)
             print("")
+            print("Explored:")
             for obj in explored:
                 print(obj.y, obj.x, obj.label)
-                print("")
+            print("")
             return path(leaf)
         explored.append(leaf)
         for next_node in neighbourhood(graph, leaf):
