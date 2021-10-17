@@ -9,6 +9,7 @@ class node:
         self.parent = parent
         self.h = h
 
+
 def heuristic(curr_node, goal_node):
     D = 1  # simple move cost of 1
     dx = abs(curr_node.x - goal_node.x)
@@ -27,12 +28,15 @@ def neighbourhood(graph, leaf):
                 neighbours.append(next_node)
     return neighbours
 
+
 def path(node):
     path = []
     while node.parent != None:
         path.append(node)
         node = node.parent
+    path.append(node)
     return path
+
 
 def graph_search(graph, start_node, goal_node):
     frontier = []
@@ -74,17 +78,14 @@ def pathfinding(input_filepath):
         count_y += 1
         count_x = 0
 
-    for obj in graph:
-        print(obj.x, obj.y, obj.label)
-
     # convert all tiles adjacent to a hazard to an obstacle
     for obj in graph:
         if(obj.label == "H"):
             hazard_neighbours = neighbourhood(graph, obj)
             for neighbour in hazard_neighbours:
                 neighbour.label = "X"
-            obj.label = "X" # also convert the hazard to an obstacle
-    
+            obj.label = "X"  # also convert the hazard to an obstacle
+
     for obj in graph:
         if(obj.label == "S"):
             start_node = obj
@@ -94,13 +95,9 @@ def pathfinding(input_filepath):
     for obj in graph:
         obj.h = heuristic(obj, goal_node)
 
-    print("")
-    for obj in graph:
-        print(obj.x, obj.y, obj.label, obj.h)
-
     path = graph_search(graph, start_node, goal_node)
     for obj in path:
-        print(obj.x, obj.y, obj.label)
+        print(obj.y, obj.x, obj.label)
 
     # optimal_path is a list of tuples indicated the optimal path from start to goal
     # explored_list is the list of nodes explored during search
