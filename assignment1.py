@@ -31,10 +31,17 @@ def neighbourhood(graph, leaf):
 
 def path(node):
     path = []
+    """""
     while node.parent != None:
         path.append(node)
         node = node.parent
     path.append(node)
+    return path
+    """
+
+    while node != None:
+        path.append(node)
+        node = node.parent
     return path
 
 
@@ -48,7 +55,6 @@ def graph_search(graph, start_node, goal_node):
             return False
         leaf = frontier.pop()
         if leaf == goal_node:
-            # TODO: Backtrack through parents
             return path(leaf)
         explored.append(leaf)
         for next_node in neighbourhood(graph, leaf):
