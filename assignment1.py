@@ -99,13 +99,9 @@ def pathfinding(input_filepath):
             start_node = obj
         elif(obj.label == "G"):
             goal_node = obj
-    print("Graph:")
+
     for obj in graph:
         obj.h = heuristic(obj, goal_node)
-        print(obj.y, obj.x, obj.label, obj.h)
-    print("")
-
-    
 
     path = graph_search(graph, start_node, goal_node)
     print("Path:")
