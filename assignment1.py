@@ -1,14 +1,17 @@
-# Name this file to assignment1.py when you submit
+# Name this file to assignment1.py when you submit  
 
 class node:
-    def __init__(self, x, y, label, parent=None, path_cost=0, h=0):
+    def __init__(self, x, y, label, parent=None, path_cost=0, h=0, f=0):
         self.x = x
         self.y = y
         self.label = label
         self.path_cost = path_cost
         self.parent = parent
         self.h = h
+        self.f = f
 
+def f_n(node):
+    return node.path_cost + node.h
 
 def heuristic(curr_node, goal_node):
     D = 1  # simple move cost of 1
@@ -66,6 +69,8 @@ def graph_search(graph, start_node, goal_node):
                 next_node.parent = leaf
                 next_node.path_cost = curr_path_cost
                 frontier.append(next_node)
+                frontier.sort(key=f_n, reverse=True)
+                
 
 
 def pathfinding(input_filepath):
