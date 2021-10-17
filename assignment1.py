@@ -5,7 +5,8 @@ class node:
         self.x = x
         self.y = y
         self.label = label
-
+        self.path_cost = path_cost
+        self.parent = parent
 
 def heuristic(curr_node, goal_node):
     D = 1  # simple move cost of 1
@@ -19,7 +20,8 @@ def neighbourhood(graph, leaf):
     for next_node in graph:
         # Only append nodes that are directly left or right of
         # current node
-        if(next_node.isObstacle == False):
+        # skip obstacles ("X")
+        if(next_node.label != "X"):
             if (heuristic(leaf, next_node) == 1 and leaf != next_node):
                 neighbours.append(next_node)
     return neighbours
@@ -64,6 +66,9 @@ def pathfinding(input_filepath):
         count_y += 1
         count_x = 0
 
+    for obj in graph:
+        print(obj.x, obj.y, obj.label)
+
     # convert all tiles adjacent to a hazard to an obstacle
     for obj in graph:
         if(obj.label == "H"):
@@ -77,19 +82,13 @@ def pathfinding(input_filepath):
             start_node = obj
         elif(obj.label == "G"):
             goal_node = obj
-        elif(obj.label == "X"):
-            obj.isObstacle = True
-        elif(obj.label == "H"):
-            obj.isHazard = True
-    for obj in graph:
-        print(obj.x, obj.y, obj.label)
 
+    for obj in graph:
+        obj.h = heuristic(obj, goal_node)
 
     print("")
     for obj in graph:
         print(obj.x, obj.y, obj.label, obj.h)
-    for obj in graph:
-        obj.h = heuristic(obj, goal_node)
 
     graph_search(graph, start_node, goal_node)
 
