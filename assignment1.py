@@ -54,7 +54,7 @@ def graph_search(graph, start_node, goal_node):
         if leaf == goal_node:
             explored.append(leaf)
 
-            print("Path cost:", leaf.path_cost)
+            print("Path cost:" + str(leaf.path_cost))
             print("")
             print("Explored:")
             for obj in explored:
