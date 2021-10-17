@@ -13,6 +13,7 @@ The technical document will be worth 40 marks, allocated as described above.
     We then call the graph_search() function, which uses code similar to what was in the lecture for A*. 
     The only difference is that after a node gets added to the frontier, the frontier is then sorted according to a key function: f(n) = node.path_cost + h(n), and reversed. Since our list pops off the end, we want the lowest f(n) to be at the end of the list, hence the reversal. 
     When our goal state is popped off the stack, we print out the Cost, Explored List, and the Optimal Path found. 
+    Our path is a list returned by the path() function, which loops through each nodes parent, starting from the goal state. 
 
 2. What type of agent have you implemented (simple reflex agent, model-based reflex agent, goal-based agent, or utility-based agent)? [3 marks]
     We have implemented a goal-based agent where the goal is to reach the goal node. 
