@@ -108,7 +108,7 @@ def pathfinding(input_filepath):
     
 
     path = graph_search(graph, start_node, goal_node)
-
+    print("Path:")
     for obj in path:
         print(obj.y, obj.x, obj.label)
 
