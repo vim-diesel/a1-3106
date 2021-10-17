@@ -27,6 +27,12 @@ def neighbourhood(graph, leaf):
                 neighbours.append(next_node)
     return neighbours
 
+def path(node):
+    path = []
+    while node.parent != None:
+        path.append(node)
+        node = node.parent
+    return path
 
 def graph_search(graph, start_node, goal_node):
     frontier = []
@@ -38,7 +44,8 @@ def graph_search(graph, start_node, goal_node):
             return False
         leaf = frontier.pop()
         if leaf == goal_node:
-            return leaf.path()  # TODO: Backtrack through parents
+            # TODO: Backtrack through parents
+            return path(leaf)
         explored.append(leaf)
         for next_node in neighbourhood(graph, leaf):
             curr_path_cost = leaf.path_cost + 1
@@ -91,7 +98,9 @@ def pathfinding(input_filepath):
     for obj in graph:
         print(obj.x, obj.y, obj.label, obj.h)
 
-    graph_search(graph, start_node, goal_node)
+    path = graph_search(graph, start_node, goal_node)
+    for obj in path:
+        print(obj.x, obj.y, obj.label)
 
     # optimal_path is a list of tuples indicated the optimal path from start to goal
     # explored_list is the list of nodes explored during search
