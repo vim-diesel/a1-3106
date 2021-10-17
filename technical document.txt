@@ -6,7 +6,7 @@ The technical document will be worth 40 marks, allocated as described above.
     Our implementation creates a new class called "node" which stores data on the node (x,y, parent, path_cost, and label[O,X,H,S, or G])
     After reading in the lines of the file and formatting it (removing any blank lines), we create a node for each object in the input and add it to a list.
     We then iterate through the list and convert any hazards and their adjacent tiles to obstacles. To do this we use the neighbourhood() function which returns all neighbours adjacent to the tile.
-    Our neighbourhood function works by calling the heuristic() function with the current tile as the goal node, and finding any tiles that return a h(n) <= 1, which returns only the adjacent tiles. We skip any obstacle nodes.
+    Our neighbourhood function works by calling the heuristic() function with the current tile as the goal node, and finding any tiles that return a h(n) <= 1, which returns only the adjacent tiles. We skip any obstacle nodes (which now includes hazards and adjacent tiles).
     We then find the start and goal node, by iterating through our list, and storing them in a variable.
     We iterate through the list and calculate the heuristic for each node, storing it in a property on the node (node.h)
     Our heuristic function calculates the manhattan distance from each node to the goal state.
