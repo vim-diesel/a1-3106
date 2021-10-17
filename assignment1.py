@@ -1,14 +1,13 @@
 # Name this file to assignment1.py when you submit  
 
 class node:
-    def __init__(self, x, y, label, parent=None, path_cost=0, h=0, f=0):
+    def __init__(self, x, y, label, parent=None, path_cost=0, h=0):
         self.x = x
         self.y = y
         self.label = label
         self.path_cost = path_cost
         self.parent = parent
         self.h = h
-        self.f = f
 
 def f_n(node):
     return node.path_cost + node.h
