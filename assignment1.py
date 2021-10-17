@@ -49,6 +49,12 @@ def graph_search(graph, start_node, goal_node):
             return False
         leaf = frontier.pop()
         if leaf == goal_node:
+            explored.append(leaf)
+            print(leaf.path_cost)
+            print("")
+            for obj in explored:
+                print(obj.y, obj.x, obj.label)
+                print("")
             return path(leaf)
         explored.append(leaf)
         for next_node in neighbourhood(graph, leaf):
@@ -96,6 +102,7 @@ def pathfinding(input_filepath):
         obj.h = heuristic(obj, goal_node)
 
     path = graph_search(graph, start_node, goal_node)
+
     for obj in path:
         print(obj.y, obj.x, obj.label)
 
