@@ -19,8 +19,9 @@ def neighbourhood(graph, leaf):
     for next_node in graph:
         # Only append nodes that are directly left or right of
         # current node
-        if (heuristic(leaf, next_node) == 1 and leaf != next_node):
-            neighbours.append(next_node)
+        if(next_node.isObstacle == False):
+            if (heuristic(leaf, next_node) == 1 and leaf != next_node):
+                neighbours.append(next_node)
     return neighbours
 
 
@@ -62,6 +63,15 @@ def pathfinding(input_filepath):
             count_x += 1
         count_y += 1
         count_x = 0
+
+    # convert all tiles adjacent to a hazard to an obstacle
+    for obj in graph:
+        if(obj.label == "H"):
+            hazard_neighbours = neighbourhood(graph, obj)
+            for neighbour in hazard_neighbours:
+                neighbour.label = "X"
+            obj.label = "X" # also convert the hazard to an obstacle
+    
     for obj in graph:
         if(obj.label == "S"):
             start_node = obj
@@ -71,18 +81,15 @@ def pathfinding(input_filepath):
             obj.isObstacle = True
         elif(obj.label == "H"):
             obj.isHazard = True
-
-    # convert all tiles adjacent to a hazard to an obstacle
     for obj in graph:
-        if(obj.label == "H"):
-            hazard_neighbours = neighbourhood(graph, obj)
-            for neighbour in hazard_neighbours:
-                neighbour.label = "X"
-            obj.label = "X"
+        print(obj.x, obj.y, obj.label)
 
+
+    print("")
     for obj in graph:
-        if(obj.label is not "X"):
-            obj.h = heuristic(obj, goal_node)
+        print(obj.x, obj.y, obj.label, obj.h)
+    for obj in graph:
+        obj.h = heuristic(obj, goal_node)
 
     graph_search(graph, start_node, goal_node)
 
