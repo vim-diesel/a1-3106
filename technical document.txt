@@ -10,15 +10,22 @@ The technical document will be worth 40 marks, allocated as described above.
     
 
 2. What type of agent have you implemented (simple reflex agent, model-based reflex agent, goal-based agent, or utility-based agent)? [3 marks]
-    Goal based...
+    We have implemented a goal-based agent where the goal is to reach the goal node. 
 
 3. What heuristic should be used for A* search for this environment? Show that this heuristic is consistent. Show that this heuristic is more informed than some alternative heuristic. [8 marks]
 
     http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#manhattan-distance
 
 4. Suggest a particular instance of this problem where A* search would find the optimal solution faster than uniform cost search. [4 marks]
+    Given that movement costs are uniform it is possible that in any situation Uniform cost search could find the optimal path in the most efficient way, so I will provide an example of when it could happen. An example of when this might happen when we use this example input
+    O,S,O
+    O,X,O
+    O,X,O
+    H,O,G
+    with this input A* would explore [(0,1),(0,0),(0,2),(1,2),(2,2),(3,2)] it would never explore (1,1). uniform cost search on the otherhand would very possibly visit (1,1) making it a slower search method.
 
 5. Suggest a particular instance of this problem where a greedy heuristic search would not find the optimal solution. [4 marks]
+    One example of when greedy heuristic search would not find the optimal soloution is example input 3 (I didn't copy it here because the input is very long) since our heuristic is the Manhattan-distance from the node to the goal node greedy heuristic search would take the path that goes down from the start node and would continue on that path all the way to the goal node at which point it would stop. it would achieve a path length of 38 where as the optimal is 32.
 
 6. What strategy should be used to break ties when two nodes on the frontier have equal priority function? [3 marks]
 
