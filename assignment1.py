@@ -31,17 +31,11 @@ def neighbourhood(graph, leaf):
 
 def path(node):
     path = []
-    """""
-    while node.parent != None:
-        path.append(node)
-        node = node.parent
-    path.append(node)
-    return path
-    """
 
     while node != None:
         path.append(node)
         node = node.parent
+
     return path
 
 
