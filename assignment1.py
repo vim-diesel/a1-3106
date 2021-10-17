@@ -84,8 +84,6 @@ def pathfinding(input_filepath):
     if([''] in array):
         array.remove([''])
 
-    print(array)
-
     for row in array:
         for item in row:
             graph.append(node(count_x, count_y, item))
