@@ -53,8 +53,16 @@ def graph_search(graph, start_node, goal_node):
         if leaf == goal_node:
             explored.append(leaf)
 
-            print("Path cost:" + str(leaf.path_cost))
-            print("")
+            optimal_path = path(leaf)
+            optimal_path.reverse()
+            pathString ="["
+            for obj in optimal_path:
+                pathString += "(" + str(obj.y) + ", " + str(obj.x) + ")" 
+                if(obj.label != "G"):
+                    pathString += ", "
+            pathString += "]"
+            print("Optimal Path: " + pathString)
+            print(" ")
             exploredString = "["
             for obj in explored:
                 exploredString += "(" + str(obj.y) + ", " + str(obj.x) + ")" 
@@ -63,7 +71,10 @@ def graph_search(graph, start_node, goal_node):
             exploredString += "]"
             print("Explored: " + exploredString)
             print(" ")
-            return path(leaf)
+            print("Path cost: " + str(leaf.path_cost))
+            print("")
+            return optimal_path
+            
         explored.append(leaf)
         for next_node in neighbourhood(graph, leaf):
             curr_path_cost = leaf.path_cost + 1
@@ -114,14 +125,7 @@ def pathfinding(input_filepath):
 
     path = graph_search(graph, start_node, goal_node)
     path.reverse()
-    pathString ="["
-    for obj in path:
-        pathString += "(" + str(obj.y) + ", " + str(obj.x) + ")" 
-        if(obj.label != "G"):
-            pathString += ", "
-    pathString += "]"
-    print("Path: " + pathString)
-    print(" ")
+
 
     # optimal_path is a list of tuples indicated the optimal path from start to goal
     # explored_list is the list of nodes explored during search
