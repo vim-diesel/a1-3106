@@ -55,10 +55,14 @@ def graph_search(graph, start_node, goal_node):
 
             print("Path cost:" + str(leaf.path_cost))
             print("")
-            print("Explored:")
+            exploredString = "["
             for obj in explored:
-                print(obj.y, obj.x, obj.label)
-            print("")
+                exploredString += "(" + str(obj.y) + ", " + str(obj.x) + ")" 
+                if(obj.label != "G"):
+                        exploredString += ", "
+            exploredString += "]"
+            print("Explored: " + exploredString)
+            print(" ")
             return path(leaf)
         explored.append(leaf)
         for next_node in neighbourhood(graph, leaf):
@@ -109,9 +113,15 @@ def pathfinding(input_filepath):
         obj.h = heuristic(obj, goal_node)
 
     path = graph_search(graph, start_node, goal_node)
-    print("Path:")
+    path.reverse()
+    pathString ="["
     for obj in path:
-        print(obj.y, obj.x, obj.label)
+        pathString += "(" + str(obj.y) + ", " + str(obj.x) + ")" 
+        if(obj.label != "G"):
+            pathString += ", "
+    pathString += "]"
+    print("Path: " + pathString)
+    print(" ")
 
     # optimal_path is a list of tuples indicated the optimal path from start to goal
     # explored_list is the list of nodes explored during search
