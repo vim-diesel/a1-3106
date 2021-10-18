@@ -38,6 +38,7 @@ def path(node):
         path.append(node)
         node = node.parent
 
+    path.reverse()
     return path
 
 
