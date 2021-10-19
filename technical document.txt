@@ -1,5 +1,16 @@
 Please answer the following questions in the technical document. Explain why your answers are correct.
 
+Contribution:
+Christopher Krol 101010495
+Ian Clark 100803045
+1) Yes each member of the group made significant contributions.
+
+2)Contributions were to different parts mostly but for the most part fairly evenly split.
+
+3)Ian Clark: Did almost all of the coding, did question 1 of technical and planned much of the heuristic and process.
+
+Christopher Krol: Most of the technical document, helping with heuristic and formatting as well as minor changes and improvements to the code
+
 
 The technical document will be worth 40 marks, allocated as described above.
 1.Briefly describe how your implementation works. Include information on any important algorithms, design decisions, data structures, etc. used in your implementation. [10 marks]
@@ -19,8 +30,23 @@ The technical document will be worth 40 marks, allocated as described above.
     We have implemented a goal-based agent where the goal is to reach the goal node. 
 
 3. What heuristic should be used for A* search for this environment? Show that this heuristic is consistent. Show that this heuristic is more informed than some alternative heuristic. [8 marks]
+    Since every move is either left or right or up or down and that means that in order to get from the start to the goal the agent needs to take a number of moves along the the x and/or y axis in order to get there. So we can choose to use the Manhattan-distance as the heuristic:
+    function heuristic(node, goal)
+        D = 1  # cost to move
+        dx = abs(node.x - goal.x)
+        dy = abs(node.y - goal.y)
+        return D * (dx + dy) 
 
-    http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#manhattan-distance
+    We know that this heuristic is consistent since the shortest way to get to from a to b is the number of moves that you need to go horizontally plus the number of moves that you need to go vertically or simply put x + y this is exactly what the heuristic calculates. So in the best case scenario it is perfect and if you start to add other factors such as hazards and obstacles then it only increases the difference between the actual cost and the heuristic cost. This heuristic is dependent on 2 key factors both of which are met in this situation the first that all moves cost the same and second that only vertical and horizontal movement is allowed. 
+
+    an alternative heuristic that could be used but that is less informed would be to take the exact distance between the node and the goal:
+    function heuristic(node, goal)
+        D = 1  # cost to move
+        dx = abs(node.x - goal.x)
+        dy = abs(node.y - goal.y)
+        return D * sqrt((dx * dx) + (dy * dy))
+
+        While this heuristic is also consistent it is less informed than the Manhattan-Distance and that is because the actual agent is unable to move in any direction except vertically and horizontally. Manhattan-distance takes that into account by finding the minimum distance for a path moving only vertically and horizontally, whereas the exact distance cuts corners. This means that the Manhattan-distance will always be as big or bigger than the exact distance anad because the Manhattan distance is consitent it means that it is also more informed.
 
 4. Suggest a particular instance of this problem where A* search would find the optimal solution faster than uniform cost search. [4 marks]
     Given that movement costs are uniform it is possible that in any situation Uniform cost search could find the optimal path in the most efficient way, so I will provide an example of when it could happen. An example of when this might happen when we use this example input
@@ -34,9 +60,21 @@ The technical document will be worth 40 marks, allocated as described above.
     One example of when greedy heuristic search would not find the optimal soloution is example input 3 (I didn't copy it here because the input is very long) since our heuristic is the Manhattan-distance from the node to the goal node greedy heuristic search would take the path that goes down from the start node and would continue on that path all the way to the goal node at which point it would stop. it would achieve a path length of 38 where as the optimal is 32.
 
 6. What strategy should be used to break ties when two nodes on the frontier have equal priority function? [3 marks]
-
-    http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#breaking-ties
+    A strategy that could be used in order to break ties would be to choose the node (among those that tied) with the lowest heuristic value. The reason why this would be a good strategy is that the one with the lower heuristic would be more likely to be closer to the goal node. This is all dependent on you having chosen a good heuristic.
 
 7. Consider a variant of this problem where the agent can move to adjacent diagonal squares. What would be the best heuristic to use in A* search if the agent could also make such diagonal moves? [8 marks]
-    "On a square grid that allows 8 directions of movement, use Diagonal distance (L∞)....
-    http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#diagonal-distance
+    If the agent was able to make diagonal moves then the Manhattan-distance would no longer be consistent and would not be a option as a heuristic. So in order to solve this problem we will use the Manhattan distance as the basis and work from there. Since whenever you move diagonally you are saving a move (you are essentially moving vertically and horizontally at the same time) we can use this to achieve our goal by going diagonal towards the goal from the start until we are in line with it and then going straight at it from there. this would leave us with this function:
+    let D = cost to move
+    function heuristic(node)
+        dx = abs(node.x - goal.x)
+        dy = abs(node.y - goal.y)
+        return D * ((dx + dy) - (dx or dy))
+    it gets problematic at the end because our equation doesn't know whether to use dx or dy since we don't know what is left over once it gets in line with the goal node. This however can be infered because whichever is bigger dx or dy is going to be the one that is further from the goal and therefore the one that we will still need to traverse once we are directly in line with the goal node. So we can change the return statement to look like this:
+
+    return D * ((dx + dy) - min(dx, dy))
+
+    this can be further simplified to:
+    
+    return D * max(dx, dy)
+    
+    this is only possible in this scenario because the cost of moving diagonally is the same as moving horizontally or vertically.
