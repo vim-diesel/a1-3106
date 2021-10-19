@@ -1,5 +1,4 @@
-# Name this file to assignment1.py when you submit  
-
+# custom class for storing node info
 class node:
     def __init__(self, x, y, label, parent=None, path_cost=0, h=0):
         self.x = x
@@ -9,16 +8,18 @@ class node:
         self.parent = parent
         self.h = h
 
+# key function for sorting our Frontier list
 def f_n(node):
     return node.path_cost + node.h
 
+# calculate h(n)
 def heuristic(curr_node, goal_node):
     D = 1  # simple move cost of 1
     dx = abs(curr_node.x - goal_node.x)
     dy = abs(curr_node.y - goal_node.y)
     return D * (dx + dy)
 
-
+# returns each node adjactent to given node
 def neighbourhood(graph, leaf):
     neighbours = []
     for next_node in graph:
@@ -31,13 +32,12 @@ def neighbourhood(graph, leaf):
     return neighbours
 
 
+# returns a list of given node and all it's parents
 def path(node):
     path = []
-
     while node != None:
         path.append(node)
         node = node.parent
-
     return path
 
 
@@ -46,6 +46,7 @@ def graph_search(graph, start_node, goal_node):
     frontier.append(start_node)
     explored = list()
 
+    #Pseudo code from class
     while True:
         if frontier == []:
             return False
@@ -53,6 +54,7 @@ def graph_search(graph, start_node, goal_node):
         if leaf == goal_node:
             explored.append(leaf)
 
+            #printing of required outputs
             optimal_path = path(leaf)
             optimal_path.reverse()
             pathString ="["
@@ -83,6 +85,7 @@ def graph_search(graph, start_node, goal_node):
                 next_node.parent = leaf
                 next_node.path_cost = curr_path_cost
                 frontier.append(next_node)
+                # this is where we optimize for A*, sort by f(n), then reverse so pop() takes the smallest off the end
                 frontier.sort(key=f_n, reverse=True)
                 
 
@@ -93,12 +96,14 @@ def pathfinding(input_filepath):
     count_x = 0
     count_y = 0
 
+    #read in lines from file
     with open(input_filepath, "r") as inputs:
         tmp = inputs.read().split("\n")
         array = [i.split(",") for i in tmp]
     if([''] in array):
         array.remove([''])
 
+    #create node objects for each tile
     for row in array:
         for item in row:
             graph.append(node(count_x, count_y, item))
@@ -114,22 +119,18 @@ def pathfinding(input_filepath):
                 neighbour.label = "X"
             obj.label = "X"  # also convert the hazard to an obstacle
 
+    # find start and end node
     for obj in graph:
         if(obj.label == "S"):
             start_node = obj
         elif(obj.label == "G"):
             goal_node = obj
 
+    # calculate heuristic for each node
     for obj in graph:
         obj.h = heuristic(obj, goal_node)
 
+    # perform search
     path = graph_search(graph, start_node, goal_node)
-    path.reverse()
-
-
-    # optimal_path is a list of tuples indicated the optimal path from start to goal
-    # explored_list is the list of nodes explored during search
-    # optimal_path_cost is the cost of the optimal path from the start state to the goal state
-
 
 pathfinding("input.txt")
